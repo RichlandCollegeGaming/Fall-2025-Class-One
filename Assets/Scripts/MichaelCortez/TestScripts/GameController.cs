@@ -7,10 +7,6 @@ public class GameController : MonoBehaviour
 
     public GameObject ball;
     public Transform spawnPoint;
-
-    public float maxX;
-    public float maxZ;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,15 +40,7 @@ public class GameController : MonoBehaviour
 
     void SpawnBall()
     {
-
-
-        float randomX = Random.Range(-maxX,maxX);
-        float randomZ = Random.Range(-maxZ,maxZ);   
-
-        Vector3 randomSpawnPos = new Vector3 (randomX, 10f , randomZ);  
-        Instantiate(ball, randomSpawnPos,Quaternion.identity);
-
-
+        Instantiate(ball, spawnPoint.position,Quaternion.identity);
     }
 
 

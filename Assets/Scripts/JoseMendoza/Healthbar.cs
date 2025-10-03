@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Healthbar : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private Image _healthbarSprite;
+    [SerializeField] private float _reduceSpeed = 2;
+    private float _target = 1;
+    private Camera _cam;
+
     void Start()
     {
-        
+        _cam = Camera.main;
+
     }
 
-    // Update is called once per frame
+  public void UpdateHealthBar(float maxHealth, float currentHealth)
+    {
+       _target = currentHealth / maxHealth;
+    }
+
+
     void Update()
     {
-        
+        transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position - _cam.transform.position);
+            _healthbarSprite.fillAmount = Mathf.MoveTowards(_healthbarSprite.fillAmount,_target, _reduceSpeed * Time.deltaTime);
     }
 }

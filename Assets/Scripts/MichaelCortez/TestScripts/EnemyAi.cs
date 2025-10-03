@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;   
+using UnityEngine.AI;
 
 public class EnemyAi : MonoBehaviour
 {
-    
-    public NavMeshAgent agent; 
+
+    public NavMeshAgent agent;
 
     public Transform player;
 
@@ -16,17 +16,17 @@ public class EnemyAi : MonoBehaviour
 
     //Patroling
     public Vector3 walkPoint;
-    bool walkPointSet;  
-    public float walkPointRange;    
+    bool walkPointSet;
+    public float walkPointRange;
 
     //Attacking
-        public float timeBetweenAttacks;
-        bool alreadyAttacked;
-        public GameObject projectile;
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+    public GameObject projectile;
 
     //States
-        public float sightRange, AttackRange;
-        public bool playerInSightRange, playerInAttackRange;        
+    public float sightRange, AttackRange;
+    public bool playerInSightRange, playerInAttackRange;
 
 
 
@@ -94,9 +94,9 @@ public class EnemyAi : MonoBehaviour
 
             //Attack code here
 
-            //Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent < Rigidbody >
-            //rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-           // rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
 
 
 
@@ -104,7 +104,7 @@ public class EnemyAi : MonoBehaviour
 
 
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
-            
+
         }
 
 
@@ -125,8 +125,22 @@ public class EnemyAi : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        //health
+        health -= damage;
+
+
+
+        if (health < 0) Invoke(nameof(DestroyEnemy), 0.5f);
+
+
     }
+
+    private void DestroyEnemy()
+    {
+
+        Destroy(gameObject);
+    }
+
+
 
     
 }

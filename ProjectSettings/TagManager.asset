@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - DestroyEnemy
   - CinemachineTarget
+  - WhatIsGround
+  - WhatIsPlayer
   layers:
   - Default
   - TransparentFX

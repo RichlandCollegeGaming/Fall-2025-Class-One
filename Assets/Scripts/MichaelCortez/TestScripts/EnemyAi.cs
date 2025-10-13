@@ -32,7 +32,7 @@ public class EnemyAi : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("PlayerObj").transform;
+        player = GameObject.Find("PlayerCapsule").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -62,7 +62,7 @@ public class EnemyAi : MonoBehaviour
             agent.SetDestination(walkPoint);
 
 
-        Vector2 distanceToWalkPoint = transform.position - walkPoint;
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 1f)

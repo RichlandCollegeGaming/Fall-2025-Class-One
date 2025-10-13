@@ -1,90 +1,58 @@
 using System;
 using UnityEngine;
-using UnityEngine.ProBuilder.MeshOperations;
 
 public class WeaponSwitching : MonoBehaviour
 {
-    public int selectWeapon = 0;
-    private int previousSelectedWeapon;
+    public int selectedWeapon = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       SelectWeapon();
+        SelectWeapon(); // Initialize the weapon selection
     }
 
     // Update is called once per frame
     void Update()
     {
+        int previousSelectedWeapon = selectedWeapon;
+
+        // Mouse Scroll Up
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-            int previousSelectedWeapon = selectWeapon;
-            
-            if (selectWeapon >= transform.childCount - 1)
-            {
-                selectWeapon = 0;
-                selectWeapon = 0;
-            }
-            else
-            {
-                selectWeapon++;
-            }
-
+            selectedWeapon++;
+            if (selectedWeapon >= transform.childCount) selectedWeapon = 0; // Wrap around if we exceed the number of weapons
         }
+
+        // Mouse Scroll Down
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            if (selectWeapon <= 0)
-            {
-                selectWeapon = transform.childCount - 1;
-                selectWeapon = 0;
-            }
+            selectedWeapon--;
+            if (selectedWeapon < 0) selectedWeapon = transform.childCount - 1; // Wrap around if we go below zero
+        }
 
-            else
-            {
-                selectWeapon--;
-            }
+        // Number keys to directly select weapons
+        if (Input.GetKeyDown(KeyCode.Alpha1) && transform.childCount > 0) selectedWeapon = 0;
+        if (Input.GetKeyDown(KeyCode.Alpha2) && transform.childCount > 1) selectedWeapon = 1;
+        if (Input.GetKeyDown(KeyCode.Alpha3) && transform.childCount > 2) selectedWeapon = 2;
+        if (Input.GetKeyDown(KeyCode.Alpha4) && transform.childCount > 3) selectedWeapon = 3;
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                selectWeapon = 0;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2) && transform.childCount >2)
-            {
-                selectWeapon = 1;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha3) && transform.childCount > 3)
-            {
-                selectWeapon = 2;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha4) && transform.childCount > 4)
-            {
-                selectWeapon = 3;
-            }
-
-            if (previousSelectedWeapon != selectWeapon)
-            {
-                SelectedWeapon();             
-            }
+        // If the weapon has changed, update it
+        if (previousSelectedWeapon != selectedWeapon)
+        {
+            SelectWeapon();
         }
     }
 
-    private void SelectedWeapon()
-    {
-        throw new NotImplementedException();
-    }
-
+    // Method to select the active weapon based on the selectedWeapon index
     void SelectWeapon()
     {
         int i = 0;
         foreach (Transform weapon in transform)
         {
-            if (i == selectWeapon)
-                weapon.gameObject.SetActive(true);
+            if (i == selectedWeapon)
+                weapon.gameObject.SetActive(true); // Activate the selected weapon
             else
-                weapon.gameObject.SetActive(false);
+                weapon.gameObject.SetActive(false); // Deactivate all other weapons
             i++;
         }
     }

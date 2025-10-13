@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     {
         //SpawnBall();
 
-        InvokeRepeating("SpawnBall", 1f, 2f);
+        //InvokeRepeating("SpawnBall", 1f, 2f);
 
     }
 
@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
 
             Vector3 mousePos = Input.mousePosition;
 
-            mousePos.z = 10f;
+            mousePos.z = 11f;
 
             Vector3 spawnPos = Camera.main.ScreenToWorldPoint(mousePos);
 

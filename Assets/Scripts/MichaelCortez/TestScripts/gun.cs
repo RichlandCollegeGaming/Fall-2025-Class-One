@@ -15,10 +15,12 @@ public class gun : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            //var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.positition, bulletSpawnPoint);
+            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+
+            bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
         }
 
-        bulletSpawnPoint.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
+        
 
 
     }

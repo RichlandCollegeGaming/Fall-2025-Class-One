@@ -975,6 +975,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3955223078883817427, guid: dfd4bc6513190684b96002ee5033d882, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955223078883817427, guid: dfd4bc6513190684b96002ee5033d882, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5962405558133921676, guid: dfd4bc6513190684b96002ee5033d882, type: 3}
       propertyPath: player
       value: 

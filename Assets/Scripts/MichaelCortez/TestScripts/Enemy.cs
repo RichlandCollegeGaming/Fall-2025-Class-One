@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        waveSpawner = GetComponent<WaveSpawner>();
+        waveSpawner = GetComponentInParent<WaveSpawner>();
     }
 
     
@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
 
-            //waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
+            waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         }
 
 

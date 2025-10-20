@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
@@ -12,7 +13,24 @@ public class WaveSpawner : MonoBehaviour
     public Wave[] waves;
 
 
-    private int currentWaveIndex = 0;
+    public int currentWaveIndex = 0;
+
+    private bool readyToCountDown;
+
+    private void Start ()
+    {
+        readyToCountDown = true;  
+
+        for (int i = 0; i < waves.Length; i++)
+        {
+            waves[i].enemiesLeft = waves[i].enemies.Length;
+        }
+
+    }
+
+
+
+
 
 
     private void Update()
@@ -36,7 +54,6 @@ public class WaveSpawner : MonoBehaviour
 
 
     }
-
 
 
 

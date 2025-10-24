@@ -940,10 +940,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2461868400202116960, guid: dfd4bc6513190684b96002ee5033d882, type: 3}
+      propertyPath: m_Speed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5962405558133921676, guid: dfd4bc6513190684b96002ee5033d882, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 497781975}
+    - target: {fileID: 5962405558133921676, guid: dfd4bc6513190684b96002ee5033d882, type: 3}
+      propertyPath: sightRange
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

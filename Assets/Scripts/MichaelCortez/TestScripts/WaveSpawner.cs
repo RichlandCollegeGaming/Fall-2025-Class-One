@@ -17,9 +17,9 @@ public class WaveSpawner : MonoBehaviour
 
     private bool readyToCountDown;
 
-    private void Start ()
+    private void Start()
     {
-        readyToCountDown = true;  
+        readyToCountDown = true;
 
         for (int i = 0; i < waves.Length; i++)
         {
@@ -39,9 +39,9 @@ public class WaveSpawner : MonoBehaviour
 
         if (countdown <= 0)
         {
-            
+
             countdown = waves[currentWaveIndex].timeToNextWave;
-            
+
             StartCoroutine(SpawnWave());
         }
 
@@ -95,12 +95,6 @@ public class WaveSpawner : MonoBehaviour
 
 
 
-    private void Start()
-    {
-        for (int i = 0;i < waves.Length; i++)
-        {
-            waves[i].enemiesLeft = waves[i].enemies.Length; 
-        }
-    }
+    
 
 }

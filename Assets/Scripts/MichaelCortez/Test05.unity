@@ -179,16 +179,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb57ceadedc41f14389c234733ec741b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdown: 0
-  SpawnPoint: {fileID: 0}
+  countdown: 1
+  SpawnPoint: {fileID: 34395020}
   waves:
   - enemies:
     - {fileID: -9065539241864469374, guid: 6150e23c54de1b84884db59f112bf3a8, type: 3}
     - {fileID: -3245058128495769240, guid: d12c2a014a3612b49b152b688a2bc01c, type: 3}
     - {fileID: -5921557243898140642, guid: 322ea17834fbd3649ab2070e152816e6, type: 3}
     - {fileID: -5921557243898140642, guid: 322ea17834fbd3649ab2070e152816e6, type: 3}
-    timeToNextEnemy: 0
-    timeToNextWave: 0
+    timeToNextEnemy: 0.5
+    timeToNextWave: 5
     enemiesLeft: 0
   - enemies:
     - {fileID: -9065539241864469374, guid: 6150e23c54de1b84884db59f112bf3a8, type: 3}
@@ -196,17 +196,18 @@ MonoBehaviour:
     - {fileID: -5921557243898140642, guid: 322ea17834fbd3649ab2070e152816e6, type: 3}
     - {fileID: -3245058128495769240, guid: d12c2a014a3612b49b152b688a2bc01c, type: 3}
     - {fileID: -5921557243898140642, guid: 322ea17834fbd3649ab2070e152816e6, type: 3}
-    timeToNextEnemy: 0
-    timeToNextWave: 0
+    timeToNextEnemy: 0.3
+    timeToNextWave: 8
     enemiesLeft: 0
   - enemies:
     - {fileID: -9065539241864469374, guid: 6150e23c54de1b84884db59f112bf3a8, type: 3}
     - {fileID: -9065539241864469374, guid: 6150e23c54de1b84884db59f112bf3a8, type: 3}
     - {fileID: -9065539241864469374, guid: 6150e23c54de1b84884db59f112bf3a8, type: 3}
     - {fileID: -3245058128495769240, guid: d12c2a014a3612b49b152b688a2bc01c, type: 3}
-    timeToNextEnemy: 0
-    timeToNextWave: 0
+    timeToNextEnemy: 0.2
+    timeToNextWave: 9
     enemiesLeft: 0
+  currentWaveIndex: 0
 --- !u!4 &141774292
 Transform:
   m_ObjectHideFlags: 0

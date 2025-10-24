@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyAi : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class EnemyAi : MonoBehaviour
 
     public LayerMask whatIsGroud, whatIsPlayer;
 
-    public float health;
+    private WaveSpawner waveSpawner;
+
+    private float countdown = 5f;
 
     //Patroling
     public Vector3 walkPoint;
@@ -28,6 +31,17 @@ public class EnemyAi : MonoBehaviour
     public float sightRange, AttackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+
+    [SerializeField] private Slider _healthbarSlider; // Reference to the slider UI component
+    public float maxHealth = 100f;
+    public float currentHealth = 100f;
+
+
+    private void Start()
+    {
+        waveSpawner = GetComponentInParent<WaveSpawner>();
+        _healthbarSlider.value = currentHealth;
+    }
 
 
     private void Awake()
@@ -122,21 +136,25 @@ public class EnemyAi : MonoBehaviour
 
     }
 
-
-    public void TakeDamage(int damage)
+    public void UpdateHealthBar(float currentHealth)
     {
-        health -= damage;
+        _healthbarSlider.value = currentHealth; // Directly set the slider value to current health
+    }
 
 
+    public void TakeDamage(int damageAmount)
+    {
+        currentHealth -= damageAmount;
 
-        if (health < 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        UpdateHealthBar(currentHealth);
 
+        if (currentHealth < 0) Invoke(nameof(DestroyEnemy), 0.5f);
 
     }
 
     private void DestroyEnemy()
     {
-
+        waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         Destroy(gameObject);
     }
 

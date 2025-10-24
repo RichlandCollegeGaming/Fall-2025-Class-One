@@ -22,6 +22,7 @@ public class WeaponController : MonoBehaviour
 
     private bool attacking = false;
     private bool readyToAttack = true;
+    private int attackCount = 0;  // Track the attack count
 
     void Start()
     {
@@ -55,13 +56,29 @@ public class WeaponController : MonoBehaviour
         readyToAttack = false;
         attacking = true;
 
+        // Reset attack logic after the attack speed
         Invoke(nameof(ResetAttack), attackSpeed);
+
+        // Perform raycast and hit detection after the delay
         Invoke(nameof(AttackRaycast), attackDelay);
 
+        // Play the sword swing sound
         if (audioSource != null && swordSwing != null)
         {
             audioSource.pitch = Random.Range(0.9f, 1.1f);
             audioSource.PlayOneShot(swordSwing);
+        }
+
+        // Alternate between attack animations
+        if (attackCount == 0)
+        {
+            ChangeAnimationState("ATTACK1");
+            attackCount++;
+        }
+        else
+        {
+            ChangeAnimationState("ATTACK2");
+            attackCount = 0; // Reset to start over for the next cycle
         }
     }
 
@@ -96,6 +113,22 @@ public class WeaponController : MonoBehaviour
 
     void SetAnimations()
     {
-        // Add animation logic here if needed
+        // Add your animation logic here if needed
+    }
+
+    // Method to switch between animation states (using Animator)
+    void ChangeAnimationState(string newState)
+    {
+        // Ensure the Animator component is attached to the weapon
+        Animator animator = GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.Play(newState);
+        }
+        else
+        {
+            Debug.LogWarning("Animator component not found on the Weapon.");
+        }
     }
 }
+

@@ -23,11 +23,13 @@ public class WeaponController : MonoBehaviour
     private bool attacking = false;
     private bool readyToAttack = true;
     private int attackCount = 0;  // Track the attack count
+    private Rigidbody playerRigidbody; // Reference to the player's Rigidbody for velocity tracking
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         mainCamera = Camera.main;
+        playerRigidbody = GetComponentInParent<Rigidbody>(); // Assuming the player is the parent of the weapon object
 
         if (attackInput != null)
         {
@@ -113,7 +115,20 @@ public class WeaponController : MonoBehaviour
 
     void SetAnimations()
     {
-        // Add your animation logic here if needed
+        // If player is not attacking
+        if (!attacking)
+        {
+            Vector3 playerVelocity = playerRigidbody.velocity; // Get the player's velocity
+
+            if (playerVelocity.x == 0 && playerVelocity.z == 0)
+            {
+                ChangeAnimationState("IDLE");
+            }
+            else
+            {
+                ChangeAnimationState("WALK");
+            }
+        }
     }
 
     // Method to switch between animation states (using Animator)
@@ -131,4 +146,3 @@ public class WeaponController : MonoBehaviour
         }
     }
 }
-

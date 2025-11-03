@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class EnemyAi : MonoBehaviour
 {
-
     public NavMeshAgent agent;
 
     public Transform player;
@@ -17,11 +16,6 @@ public class EnemyAi : MonoBehaviour
 
     private float countdown = 5f;
 
-    //Patroling
-    public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkPointRange;
-
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
@@ -31,18 +25,15 @@ public class EnemyAi : MonoBehaviour
     public float sightRange, AttackRange;
     public bool playerInSightRange, playerInAttackRange;
 
-
     [SerializeField] private Slider _healthbarSlider; // Reference to the slider UI component
     public float maxHealth = 100f;
     public float currentHealth = 100f;
-
 
     private void Start()
     {
         waveSpawner = GetComponentInParent<WaveSpawner>();
         _healthbarSlider.value = currentHealth;
     }
-
 
     private void Awake()
     {
@@ -52,77 +43,35 @@ public class EnemyAi : MonoBehaviour
 
     private void Update()
     {
-        //Check for sight and attack range  
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, AttackRange, whatIsPlayer);
-
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
-
-
-
-
-
-    }
-
-
-
-    private void Patroling()
-    {
-        if (!walkPointSet) SearchWalkPoint();
-
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
-
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //WalkPoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
-            walkPointSet = false;
-
-    }
-
-
-    private void SearchWalkPoint()
-    {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGroud))
-            walkPointSet = true;
+        // Always chase the player, regardless of sight range or attack range
+        ChasePlayer();
     }
 
     private void ChasePlayer()
     {
+        // Move towards the player continuously
         agent.SetDestination(player.position);
 
-        transform.LookAt(player);
+        // Calculate the direction to the player
+        Vector3 directionToPlayer = player.position - transform.position;
+        directionToPlayer.y = 0f; // Keep only the Y-axis unaffected
 
-
-
-        if (!alreadyAttacked)
+        // Rotate the enemy to face the player on the Y-axis only
+        if (directionToPlayer.sqrMagnitude > 0.01f) // Avoids a small flicker when the enemy is already facing the player
         {
-
-            //Attack code here
-
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-
-
-
-            alreadyAttacked = true;
-
-
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // Smooth rotation
         }
 
-
-
+        // Commenting out the attack logic since we're not attacking anymore
+        // if (!alreadyAttacked)
+        // {
+        //     Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        //     rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+        //     rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+        //     alreadyAttacked = true;
+        //     Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        // }
     }
 
     private void ResetAttack()
@@ -130,17 +79,10 @@ public class EnemyAi : MonoBehaviour
         alreadyAttacked = false;
     }
 
-
-    private void AttackPlayer()
-    {
-
-    }
-
     public void UpdateHealthBar(float currentHealth)
     {
         _healthbarSlider.value = currentHealth; // Directly set the slider value to current health
     }
-
 
     public void TakeDamage(int damageAmount)
     {
@@ -149,7 +91,6 @@ public class EnemyAi : MonoBehaviour
         UpdateHealthBar(currentHealth);
 
         if (currentHealth < 0) Invoke(nameof(DestroyEnemy), 0.5f);
-
     }
 
     private void DestroyEnemy()
@@ -157,8 +98,4 @@ public class EnemyAi : MonoBehaviour
         waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         Destroy(gameObject);
     }
-
-
-
-    
 }

@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [SerializeField] private float countdown;
-    [SerializeField] private GameObject SpawnPoint;
+    [SerializeField] private GameObject[] spawnPoints;
+    [SerializeField] private TextMeshProUGUI waveText;
     public Wave[] waves;
 
     public int currentWaveIndex = 0;
@@ -12,51 +13,64 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
+        // Setup enemiesLeft counts
         for (int i = 0; i < waves.Length; i++)
-        {
             waves[i].enemiesLeft = waves[i].enemies.Length;
-        }
+
+        UpdateWaveText();
+        StartCoroutine(SpawnWave()); // Start first wave immediately
     }
 
     private void Update()
     {
+        // Stop after last wave
         if (spawningComplete) return;
 
-        if (currentWaveIndex >= waves.Length)
-        {
-            spawningComplete = true;
-            Debug.Log("All waves completed!");
-            return;
-        }
-
-        countdown -= Time.deltaTime;
-
-        if (countdown <= 0)
-        {
-            countdown = waves[currentWaveIndex].timeToNextWave;
-            StartCoroutine(SpawnWave());
-        }
-
+        // When all enemies in wave are dead -> Next wave
         if (waves[currentWaveIndex].enemiesLeft == 0)
         {
             currentWaveIndex++;
+
+            if (currentWaveIndex >= waves.Length)
+            {
+                spawningComplete = true;
+                Debug.Log("All waves completed!");
+                waveText.text = "Waves Complete!";
+                return;
+            }
+
+            UpdateWaveText();
+            StartCoroutine(SpawnWave());
         }
     }
 
     private IEnumerator SpawnWave()
     {
-        if (currentWaveIndex >= waves.Length)
-            yield break;
+        Debug.Log("Spawning Wave " + (currentWaveIndex + 1));
 
-        Debug.Log("Spawning Wave " + (currentWaveIndex + 1) + " of " + waves.Length);
+        Wave wave = waves[currentWaveIndex];
 
-        for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
+        for (int i = 0; i < wave.enemies.Length; i++)
         {
-            EnemyAi enemy = Instantiate(waves[currentWaveIndex].enemies[i], SpawnPoint.transform.position, Quaternion.identity);
-            enemy.transform.SetParent(SpawnPoint.transform);
+            GameObject spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
-            yield return new WaitForSeconds(waves[currentWaveIndex].timeToNextEnemy);
+            EnemyAi enemy = Instantiate(
+                wave.enemies[i],
+                spawn.transform.position,
+                Quaternion.identity
+            );
+
+            // Set parent only if you want organization
+            enemy.transform.SetParent(spawn.transform);
+
+            yield return new WaitForSeconds(wave.timeToNextEnemy);
         }
+    }
+
+    private void UpdateWaveText()
+    {
+        if (waveText != null)
+            waveText.text = $"Wave {currentWaveIndex + 1} / {waves.Length}";
     }
 
     [System.Serializable]
@@ -64,7 +78,6 @@ public class WaveSpawner : MonoBehaviour
     {
         public EnemyAi[] enemies;
         public float timeToNextEnemy;
-        public float timeToNextWave;
         [HideInInspector] public int enemiesLeft;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;  // Add the SceneManagement namespace
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class WaveSpawner : MonoBehaviour
 
     public int currentWaveIndex = 0;
     private bool spawningComplete = false;
+
+    [SerializeField] private float delayBeforeNextScene = 5f; // Time to wait before loading the next scene (in seconds)
+    [SerializeField] private string nextLevelName = "NextLevel"; // Name of the next scene to load
 
     private void Start()
     {
@@ -36,6 +40,9 @@ public class WaveSpawner : MonoBehaviour
                 spawningComplete = true;
                 Debug.Log("All waves completed!");
                 waveText.text = "Waves Complete!";
+
+                // Start the delay before loading the next level
+                StartCoroutine(WaitAndLoadNextLevel());
                 return;
             }
 
@@ -71,6 +78,15 @@ public class WaveSpawner : MonoBehaviour
     {
         if (waveText != null)
             waveText.text = $"Wave {currentWaveIndex + 1} / {waves.Length}";
+    }
+
+    // Coroutine to wait and then load the next level
+    private IEnumerator WaitAndLoadNextLevel()
+    {
+        yield return new WaitForSeconds(delayBeforeNextScene);  // Wait for the specified delay
+
+        // Load the next scene by name
+        SceneManager.LoadScene(nextLevelName);
     }
 
     [System.Serializable]

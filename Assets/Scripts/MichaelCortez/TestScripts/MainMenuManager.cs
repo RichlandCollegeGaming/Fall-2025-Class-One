@@ -9,7 +9,7 @@ public class MainMenuManager : MonoBehaviour
    SceneManager.LoadScene(sceneName);
    }
 
-    public void QuitteGame()
+    public void QuitGame()
     {
         Application.Quit();
     }

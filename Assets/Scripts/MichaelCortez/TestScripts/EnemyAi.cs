@@ -29,6 +29,9 @@ public class EnemyAi : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth = 100f;
 
+    [Header("Death Effect")]
+    public GameObject deathPrefab; // Prefab to spawn when enemy dies
+
     private void Start()
     {
         waveSpawner = GetComponentInParent<WaveSpawner>();
@@ -95,6 +98,13 @@ public class EnemyAi : MonoBehaviour
 
     private void DestroyEnemy()
     {
+
+        // Spawn the prefab where the enemy died
+        if (deathPrefab != null)
+        {
+            Instantiate(deathPrefab, transform.position, transform.rotation);
+        }
+
         waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;
         Destroy(gameObject);
     }

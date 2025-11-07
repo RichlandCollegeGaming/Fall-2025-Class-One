@@ -215,8 +215,9 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   _healthbarSlider: {fileID: 7200909901529339807}
-  maxHealth: 130
-  currentHealth: 130
+  maxHealth: 100
+  currentHealth: 100
+  deathPrefab: {fileID: 7922172275698504691, guid: 081fcb8e6f64e2941b6e5fcd3d387c30, type: 3}
 --- !u!195 &2461868400202116960
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -510,7 +511,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

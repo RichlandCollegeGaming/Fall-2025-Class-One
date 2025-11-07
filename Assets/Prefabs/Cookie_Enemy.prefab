@@ -208,8 +208,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 5
   timeBetweenAttacks: 0.5
   projectile: {fileID: 0}
   sightRange: 200
@@ -217,8 +215,9 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   _healthbarSlider: {fileID: 7200909901529339807}
-  maxHealth: 100
-  currentHealth: 100
+  maxHealth: 50
+  currentHealth: 50
+  deathPrefab: {fileID: 2511587104319892881, guid: 2b5471831b8dfbd4b9b0abd886fea6e3, type: 3}
 --- !u!195 &2461868400202116960
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -510,9 +509,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 50
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

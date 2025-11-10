@@ -32,6 +32,8 @@ public class EnemyAi : MonoBehaviour
     [Header("Death Effect")]
     public GameObject deathPrefab; // Prefab to spawn when enemy dies
 
+    public GameObject specialPrefab; // The secondary prefab to spawn with 1/3 chance
+
     private void Start()
     {
         waveSpawner = GetComponentInParent<WaveSpawner>();
@@ -65,16 +67,6 @@ public class EnemyAi : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // Smooth rotation
         }
-
-        // Commenting out the attack logic since we're not attacking anymore
-        // if (!alreadyAttacked)
-        // {
-        //     Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-        //     rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-        //     rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-        //     alreadyAttacked = true;
-        //     Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        // }
     }
 
     private void ResetAttack()
@@ -96,13 +88,19 @@ public class EnemyAi : MonoBehaviour
         if (currentHealth < 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }
 
+
     private void DestroyEnemy()
     {
-
-        // Spawn the prefab where the enemy died
+        // Spawn the first prefab (deathPrefab)
         if (deathPrefab != null)
         {
             Instantiate(deathPrefab, transform.position, transform.rotation);
+        }
+
+        // 1/3 chance to spawn the secondary prefab (specialPrefab)
+        if (specialPrefab != null && Random.value < 0.33f)  // 1/3 chance
+        {
+            Instantiate(specialPrefab, transform.position, transform.rotation);
         }
 
         waveSpawner.waves[waveSpawner.currentWaveIndex].enemiesLeft--;

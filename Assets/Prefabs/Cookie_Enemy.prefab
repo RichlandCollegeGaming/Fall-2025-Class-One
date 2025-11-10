@@ -89,6 +89,8 @@ GameObject:
   - component: {fileID: 4780128730262704185}
   - component: {fileID: 5962405558133921676}
   - component: {fileID: 2461868400202116960}
+  - component: {fileID: 689459382023829542}
+  - component: {fileID: 3148821740048739051}
   m_Layer: 3
   m_Name: Cookie_Enemy
   m_TagString: Enemy
@@ -218,6 +220,7 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 50
   deathPrefab: {fileID: 2511587104319892881, guid: 2b5471831b8dfbd4b9b0abd886fea6e3, type: 3}
+  specialPrefab: {fileID: 4074412849831829244, guid: 39c8ac7ceaf54f7468889631e8d200ef, type: 3}
 --- !u!195 &2461868400202116960
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -240,6 +243,41 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &689459382023829542
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985712968846672095}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.33
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3148821740048739051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985712968846672095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30cc544c119fd4040b8f7b95cf74d482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 5
+  damageInterval: 2
 --- !u!1 &2001779061067298574
 GameObject:
   m_ObjectHideFlags: 0

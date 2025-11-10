@@ -8,5 +8,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scripts/MichaelCortez/GameScene.unity
     guid: dd8ed9bfdabe4f64ea4279ca71c962bb
+  - enabled: 1
+    path: Assets/Scenes/MainLevel.unity
+    guid: 8ec8721ebc99f5947afa7d8c74fab3b7
+  - enabled: 1
+    path: Assets/Scripts/MichaelCortez/DeathScreen.unity
+    guid: eb8c7fa5d76998743b2c2df080b8d3c5
+  - enabled: 1
+    path: Assets/Scripts/MichaelCortez/MainMenu.unity
+    guid: 2922b83837d1be44c9331f5595f96662
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

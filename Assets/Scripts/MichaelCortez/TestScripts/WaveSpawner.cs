@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;  // Add the SceneManagement namespace
+using UnityEngine.SceneManagement;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -12,8 +12,8 @@ public class WaveSpawner : MonoBehaviour
     public int currentWaveIndex = 0;
     private bool spawningComplete = false;
 
-    [SerializeField] private float delayBeforeNextScene = 5f; // Time to wait before loading the next scene (in seconds)
-    [SerializeField] private string nextLevelName = "NextLevel"; // Name of the next scene to load
+    [SerializeField] private float delayBeforeNextScene = 3f; // Time to wait before loading the next scene (in seconds)
+    [SerializeField] private string nextLevelName = "WinScreen"; // Name of the next scene to load
 
     private void Start()
     {
@@ -30,22 +30,20 @@ public class WaveSpawner : MonoBehaviour
         // Stop after last wave
         if (spawningComplete) return;
 
-        // When all enemies in wave are dead -> Next wave
+        // Check if all enemies in the current wave are dead
         if (waves[currentWaveIndex].enemiesLeft == 0)
         {
-            currentWaveIndex++;
-
-            if (currentWaveIndex >= waves.Length)
+            // If it's the final wave, wait 3 seconds before loading the WinScreen
+            if (currentWaveIndex >= waves.Length - 1)
             {
                 spawningComplete = true;
-                Debug.Log("All waves completed!");
                 waveText.text = "Waves Complete!";
-
-                // Start the delay before loading the next level
                 StartCoroutine(WaitAndLoadNextLevel());
                 return;
             }
 
+            // Otherwise, move to the next wave
+            currentWaveIndex++;
             UpdateWaveText();
             StartCoroutine(SpawnWave());
         }
@@ -85,7 +83,7 @@ public class WaveSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(delayBeforeNextScene);  // Wait for the specified delay
 
-        // Load the next scene by name
+        // Load the next scene by name (WinScreen in this case)
         SceneManager.LoadScene(nextLevelName);
     }
 

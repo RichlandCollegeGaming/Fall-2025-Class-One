@@ -89,7 +89,7 @@ public class EnemyAi : MonoBehaviour
     }
 
 
-    private void DestroyEnemy()
+    public void DestroyEnemy()
     {
         // Spawn the first prefab (deathPrefab)
         if (deathPrefab != null)

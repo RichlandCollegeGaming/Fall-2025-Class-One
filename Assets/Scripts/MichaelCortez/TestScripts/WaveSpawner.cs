@@ -12,29 +12,28 @@ public class WaveSpawner : MonoBehaviour
     public int currentWaveIndex = 0;
     private bool spawningComplete = false;
 
-    [SerializeField] private float delayBeforeNextScene = 3f; // Time to wait before loading the next scene (in seconds)
-    [SerializeField] private string nextLevelName = "WinScreen"; // Name of the next scene to load
+    [SerializeField] private float delayBeforeNextScene = 3f;
+    [SerializeField] private string nextLevelName = "WinScreen";
 
     private void Start()
     {
-        // Setup enemiesLeft counts
+        // Initialize enemiesLeft for each wave
         for (int i = 0; i < waves.Length; i++)
             waves[i].enemiesLeft = waves[i].enemies.Length;
 
         UpdateWaveText();
-        StartCoroutine(SpawnWave()); // Start first wave immediately
+        StartCoroutine(SpawnWave());
     }
 
     private void Update()
     {
-        // Stop after last wave
         if (spawningComplete) return;
 
-        // Check if all enemies in the current wave are dead
-        if (waves[currentWaveIndex].enemiesLeft == 0)
+        // If all enemies of current wave are dead
+        if (waves[currentWaveIndex].enemiesLeft <= 0)
         {
-            // If it's the final wave, wait 3 seconds before loading the WinScreen
-            if (currentWaveIndex >= waves.Length - 1)
+            // FINAL WAVE COMPLETED Load next scene
+            if (currentWaveIndex == waves.Length - 1)
             {
                 spawningComplete = true;
                 waveText.text = "Waves Complete!";
@@ -42,7 +41,7 @@ public class WaveSpawner : MonoBehaviour
                 return;
             }
 
-            // Otherwise, move to the next wave
+            // Move to next wave
             currentWaveIndex++;
             UpdateWaveText();
             StartCoroutine(SpawnWave());
@@ -65,8 +64,8 @@ public class WaveSpawner : MonoBehaviour
                 Quaternion.identity
             );
 
-            // Set parent only if you want organization
-            enemy.transform.SetParent(spawn.transform);
+            // Give the enemy a reference to THIS WaveSpawner
+            enemy.waveSpawner = this;
 
             yield return new WaitForSeconds(wave.timeToNextEnemy);
         }
@@ -78,12 +77,9 @@ public class WaveSpawner : MonoBehaviour
             waveText.text = $"Wave {currentWaveIndex + 1} / {waves.Length}";
     }
 
-    // Coroutine to wait and then load the next level
     private IEnumerator WaitAndLoadNextLevel()
     {
-        yield return new WaitForSeconds(delayBeforeNextScene);  // Wait for the specified delay
-
-        // Load the next scene by name (WinScreen in this case)
+        yield return new WaitForSeconds(delayBeforeNextScene);
         SceneManager.LoadScene(nextLevelName);
     }
 

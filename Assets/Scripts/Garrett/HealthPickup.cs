@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HealthPickup : MonoBehaviour
 {
-    public float damageAmount = -10f;  // Amount of damage to deal to the player
+    public int damageAmount = -10;  // Amount of damage to deal to the player
 
     void OnTriggerEnter(Collider other)
     {

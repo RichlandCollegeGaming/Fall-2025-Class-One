@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageZone : MonoBehaviour
 {
-    [SerializeField] private float damageAmount = 10f; // Amount of damage to deal
+    [SerializeField] private int damageAmount = 10; // Amount of damage to deal
     [SerializeField] private float damageInterval = 2f; // Time interval to wait before dealing damage again (in seconds)
 
     private bool playerInZone = false;  // To check if the player is inside the trigger zone

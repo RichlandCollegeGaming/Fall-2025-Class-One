@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -123,6 +124,7 @@ public class RollingPin : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(attackDamage);
+                    audioSource.PlayOneShot(hitSound);
                 }
                 else
                 {

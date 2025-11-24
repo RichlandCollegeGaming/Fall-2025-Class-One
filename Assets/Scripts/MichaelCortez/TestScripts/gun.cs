@@ -17,6 +17,21 @@ public class Gun : MonoBehaviour
     private bool isCooldown = false;
     private float cooldownEndTime = 0f;
 
+    public AudioClip sound;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        // Get the AudioSource component attached to the same GameObject
+        audioSource = GetComponent<AudioSource>();
+
+        // If no AudioSource is found, log a warning
+        if (audioSource == null)
+        {
+            Debug.LogWarning("No AudioSource found on this GameObject. Please add one.");
+        }
+    }
+
     private void Update()
     {
         // If we're on cooldown, check if the time has passed
@@ -34,6 +49,7 @@ public class Gun : MonoBehaviour
 
     private void Fire()
     {
+        audioSource.PlayOneShot(sound);
         // Instantiate and shoot the bullet
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;

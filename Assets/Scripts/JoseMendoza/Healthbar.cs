@@ -1,7 +1,8 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Healthbar : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class Healthbar : MonoBehaviour
     public float flashDuration = 0.5f;
     public string sceneToLoad = "GameOverScene";
 
+
+    public AudioClip HealSound;
+    public AudioClip DamageSound;
+    private AudioSource audioSource;
+
     void Start()
     {
         _healthbarSlider.value = currentHealth;
@@ -28,6 +34,17 @@ public class Healthbar : MonoBehaviour
             fadeImage.gameObject.SetActive(false);
             fadeImage.color = new Color(0, 0, 0, 0);
         }
+
+
+            // Get the AudioSource component attached to the same GameObject
+            audioSource = GetComponent<AudioSource>();
+
+            // If no AudioSource is found, log a warning
+            if (audioSource == null)
+            {
+                Debug.LogWarning("No AudioSource found on this GameObject. Please add one.");
+            }
+
     }
 
     public void UpdateHealthBar(int currentHealth)
@@ -54,6 +71,8 @@ public class Healthbar : MonoBehaviour
         UpdateHealthBar(currentHealth);
 
         StartCoroutine(DamageFlashEffect());
+
+        audioSource.PlayOneShot(DamageSound);
     }
 
     public void Heal(int healingAmount)
@@ -66,6 +85,8 @@ public class Healthbar : MonoBehaviour
         UpdateHealthBar(currentHealth);
 
         StartCoroutine(HealingFlashEffect());
+
+        audioSource.PlayOneShot(HealSound);
     }
 
     private IEnumerator DamageFlashEffect()

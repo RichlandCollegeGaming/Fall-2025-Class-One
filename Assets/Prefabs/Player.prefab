@@ -1562,7 +1562,7 @@ MonoBehaviour:
   flashDuration: 0.5
   sceneToLoad: DeathScreen
   HealSound: {fileID: 8300000, guid: 1bcbff63dd66a3546b4beb9d06ca7b38, type: 3}
-  DamageSound: {fileID: 0}
+  DamageSound: {fileID: 8300000, guid: 6d421c4b7c4259843a9e77678d80e666, type: 3}
 --- !u!82 &726085322469085493
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1689,15 +1689,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2986183
+      value: 1.375
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.47
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_LocalRotation.w
